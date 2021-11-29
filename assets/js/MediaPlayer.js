@@ -6,8 +6,20 @@ function MediaPlayer(config) {
 }
 
 MediaPlayer.prototype._initPlugins = function() {
+  const player = {
+    play: () => this.play(),
+    pause: () => this.pause(),
+    media: this.media,
+    get muted() { // getter (propiedad virtual) -> La definimos con get
+      return this.media.muted;
+    },
+
+    set muted(value) { // Setter -> La agregamo 
+      this.media.muted = value;
+    }
+  }
   this.plugins.forEach(plugin => {
-    plugin.run(this);
+    plugin.run(player);
   });
 }
 
